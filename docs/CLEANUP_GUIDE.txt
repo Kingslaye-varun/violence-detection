@@ -1,0 +1,212 @@
+================================================================================
+                    FOLDER CLEANUP & ORGANIZATION
+================================================================================
+
+KEEP THESE FILES (ESSENTIAL):
+------------------------------
+
+MODELS (MUST HAVE):
+✅ mobilenet_feature_extractor.tflite
+✅ violence_detection_lstm.tflite
+✅ gender_classification.tflite
+
+MAIN SCRIPTS (CHOOSE ONE):
+✅ simple_stable.py              ← RECOMMENDED (no flickering, simple)
+✅ streamlit_dashboard.py        ← For web interface
+
+DOCUMENTATION:
+✅ README.md
+✅ requirements.txt
+✅ CLEANUP_GUIDE.txt (this file)
+
+================================================================================
+                    DELETE THESE FILES (OPTIONAL/OLD):
+================================================================================
+
+❌ combined_detection.py         (old version)
+❌ enhanced_detection.py         (complex, use simple_stable.py instead)
+❌ stable_detection.py           (had errors, use simple_stable.py)
+❌ QUICKSTART.txt                (info in README.md)
+❌ FLICKERING_FIX.txt            (already fixed)
+
+================================================================================
+                    FINAL FOLDER STRUCTURE
+================================================================================
+
+complete new/
+├── MODELS (3 files)
+│   ├── mobilenet_feature_extractor.tflite
+│   ├── violence_detection_lstm.tflite
+│   └── gender_classification.tflite
+│
+├── MAIN SCRIPTS (2 files)
+│   ├── simple_stable.py          ← Use this for OpenCV
+│   └── streamlit_dashboard.py    ← Use this for web
+│
+└── DOCUMENTATION (3 files)
+    ├── README.md
+    ├── requirements.txt
+    └── CLEANUP_GUIDE.txt
+
+TOTAL: 8 files (clean and organized!)
+
+================================================================================
+                    WHICH SCRIPT TO USE?
+================================================================================
+
+For Local Monitoring (OpenCV):
+-------------------------------
+USE: simple_stable.py
+
+python simple_stable.py
+
+Features:
+✅ No flickering (guaranteed)
+✅ Violence detection
+✅ Gender classification
+✅ Session statistics
+✅ Simple and stable
+
+For Web Dashboard:
+------------------
+USE: streamlit_dashboard.py
+
+streamlit run streamlit_dashboard.py
+
+Features:
+✅ Web interface
+✅ Live charts
+✅ Remote access
+✅ Professional UI
+
+================================================================================
+                    CLEANUP COMMANDS
+================================================================================
+
+Windows (PowerShell):
+---------------------
+# Delete old files
+Remove-Item "combined_detection.py" -ErrorAction SilentlyContinue
+Remove-Item "enhanced_detection.py" -ErrorAction SilentlyContinue
+Remove-Item "stable_detection.py" -ErrorAction SilentlyContinue
+Remove-Item "QUICKSTART.txt" -ErrorAction SilentlyContinue
+Remove-Item "FLICKERING_FIX.txt" -ErrorAction SilentlyContinue
+
+Linux/Mac:
+----------
+# Delete old files
+rm -f combined_detection.py enhanced_detection.py stable_detection.py
+rm -f QUICKSTART.txt FLICKERING_FIX.txt
+
+================================================================================
+                    BACKUP YOUR MODELS
+================================================================================
+
+IMPORTANT: Before cleanup, backup your models!
+
+Create backup folder:
+---------------------
+mkdir models_backup
+copy *.tflite models_backup\
+
+Or just keep the 3 .tflite files safe!
+
+================================================================================
+                    QUICK START (AFTER CLEANUP)
+================================================================================
+
+1. Install dependencies:
+   pip install -r requirements.txt
+
+2. Run detection:
+   python simple_stable.py
+
+   OR
+
+   streamlit run streamlit_dashboard.py
+
+3. Enjoy clean, organized system!
+
+================================================================================
+                    FILE SIZES
+================================================================================
+
+Models:
+- mobilenet_feature_extractor.tflite    ~9 MB
+- violence_detection_lstm.tflite        ~1-2 MB
+- gender_classification.tflite          ~9 MB
+Total: ~19-20 MB
+
+Scripts:
+- simple_stable.py                      ~10 KB
+- streamlit_dashboard.py                ~15 KB
+Total: ~25 KB
+
+Documentation:
+- README.md                             ~10 KB
+- requirements.txt                      ~1 KB
+- CLEANUP_GUIDE.txt                     ~5 KB
+Total: ~16 KB
+
+GRAND TOTAL: ~20 MB (very clean!)
+
+================================================================================
+                    WHAT EACH FILE DOES
+================================================================================
+
+simple_stable.py:
+-----------------
+- OpenCV-based detection
+- No flickering MediaPipe
+- Violence + Gender detection
+- Session statistics
+- Simple and reliable
+
+streamlit_dashboard.py:
+-----------------------
+- Web-based interface
+- Live video feed
+- Statistics panel
+- Alert history
+- Live charts
+- Adjustable settings
+
+README.md:
+----------
+- Complete documentation
+- Usage instructions
+- Troubleshooting
+
+requirements.txt:
+-----------------
+- List of dependencies
+- For pip install
+
+================================================================================
+                    RECOMMENDED SETUP
+================================================================================
+
+STEP 1: Backup models
+----------------------
+mkdir models_backup
+copy *.tflite models_backup\
+
+STEP 2: Delete old files
+-------------------------
+(Use commands above)
+
+STEP 3: Verify you have:
+------------------------
+✅ 3 model files (.tflite)
+✅ simple_stable.py
+✅ streamlit_dashboard.py
+✅ README.md
+✅ requirements.txt
+
+STEP 4: Test
+------------
+python simple_stable.py
+
+DONE! Clean and organized! 🎉
+
+================================================================================

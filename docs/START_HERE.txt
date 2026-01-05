@@ -1,0 +1,118 @@
+================================================================================
+                         🚀 START HERE 🚀
+================================================================================
+
+Welcome! Your violence detection system is ready.
+
+================================================================================
+                    STEP 1: INSTALL DEPENDENCIES
+================================================================================
+
+pip install -r requirements.txt
+
+This installs:
+- tensorflow (AI models)
+- opencv-python (video)
+- mediapipe (pose detection)
+- streamlit (web dashboard)
+- plotly, pandas (charts)
+
+================================================================================
+                    STEP 2: CHOOSE YOUR VERSION
+================================================================================
+
+Option A: OpenCV (Recommended)
+-------------------------------
+python simple_stable.py
+
+✅ No flickering
+✅ All features
+✅ Session statistics
+✅ Simple and stable
+
+Option B: Web Dashboard
+-----------------------
+streamlit run streamlit_dashboard.py
+
+✅ Professional UI
+✅ Live charts
+✅ Remote access
+✅ Adjustable settings
+
+================================================================================
+                    STEP 3: TEST IT
+================================================================================
+
+Normal Activity (should stay GREEN):
+- Standing still
+- Walking
+- Waving
+
+Violence (should turn RED):
+- Punching air
+- Kicking
+- Fighting stance
+
+Press 'q' or ESC to quit
+
+================================================================================
+                    YOUR FILES
+================================================================================
+
+MODELS (3 files - KEEP SAFE):
+✅ mobilenet_feature_extractor.tflite
+✅ violence_detection_lstm.tflite
+✅ gender_classification.tflite
+
+SCRIPTS (2 files):
+✅ simple_stable.py
+✅ streamlit_dashboard.py
+
+DOCS (3 files):
+✅ README.md (full guide)
+✅ requirements.txt
+✅ CLEANUP_GUIDE.txt
+
+TOTAL: 8 files (~20 MB)
+
+================================================================================
+                    QUICK COMMANDS
+================================================================================
+
+Install:
+--------
+pip install -r requirements.txt
+
+Run OpenCV:
+-----------
+python simple_stable.py
+
+Run Web Dashboard:
+------------------
+streamlit run streamlit_dashboard.py
+
+================================================================================
+                    TROUBLESHOOTING
+================================================================================
+
+Webcam not opening?
+-------------------
+Try: cap = cv2.VideoCapture(1)  # Change 0 to 1
+
+Streamlit errors?
+-----------------
+pip install --upgrade streamlit plotly pandas
+
+Low FPS?
+--------
+Increase FRAME_SKIP in code
+
+================================================================================
+                    THAT'S IT!
+================================================================================
+
+You're ready to go! 🎉
+
+For more info, read README.md
+
+================================================================================

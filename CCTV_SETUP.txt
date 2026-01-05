@@ -1,0 +1,331 @@
+================================================================================
+                    CCTV CAMERA SETUP GUIDE
+================================================================================
+
+🎥 CONNECTING TO IP CAMERAS:
+-----------------------------
+
+STEP 1: Get Your Camera Details
+--------------------------------
+You need:
+✅ IP Address (e.g., 192.168.1.100)
+✅ Username (e.g., admin)
+✅ Password (e.g., password123)
+✅ Port (usually 554 for RTSP)
+✅ Channel (usually 1)
+
+STEP 2: Find Your Camera's RTSP URL Format
+-------------------------------------------
+
+Common formats by brand:
+
+Hikvision:
+rtsp://username:password@IP:554/Streaming/Channels/101
+
+Dahua:
+rtsp://username:password@IP:554/cam/realmonitor?channel=1&subtype=0
+
+TP-Link:
+rtsp://username:password@IP:554/stream1
+
+Axis:
+rtsp://username:password@IP:554/axis-media/media.amp
+
+Generic:
+rtsp://username:password@IP:554/stream1
+
+STEP 3: Modify the Dashboard Code
+----------------------------------
+
+Open: streamlit_dashboard_enhanced.py
+
+Find this line (around line 200):
+    cap = cv2.VideoCapture(int(camera_index))
+
+Replace with:
+    # CCTV Camera Connection
+    rtsp_url = "rtsp://admin:password@192.168.1.100:554/stream1"
+    cap = cv2.VideoCapture(rtsp_url)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Reduce latency
+
+STEP 4: Test Connection
+------------------------
+
+Run this Python script to test:
+
+```python
+import cv2
+
+rtsp_url = "rtsp://admin:password@192.168.1.100:554/stream1"
+cap = cv2.VideoCapture(rtsp_url)
+
+if cap.isOpened():
+    ret, frame = cap.read()
+    if ret:
+        print("✅ Connected successfully!")
+        print(f"Frame size: {frame.shape}")
+    else:
+        print("❌ No frames received")
+else:
+    print("❌ Cannot connect to camera")
+
+cap.release()
+```
+
+================================================================================
+                    DEPLOYMENT OPTIONS
+================================================================================
+
+⚠️ IMPORTANT: Vercel CANNOT host this app because:
+---------------------------------------------------
+❌ Vercel is for static/serverless sites
+❌ No support for long-running processes
+❌ No support for video streaming
+❌ TensorFlow models too large (>50MB limit)
+❌ No GPU support
+
+✅ RECOMMENDED DEPLOYMENT OPTIONS:
+----------------------------------
+
+OPTION 1: Streamlit Cloud (FREE & EASY) ⭐
+------------------------------------------
+Best for: Quick deployment, free hosting
+
+Steps:
+1. Push code to GitHub
+2. Go to: https://streamlit.io/cloud
+3. Sign in with GitHub
+4. Click "New app"
+5. Select your repository
+6. Deploy!
+
+Limitations:
+- Models must be <1GB
+- Limited CPU/RAM
+- Public by default
+
+OPTION 2: Railway (EASY & AFFORDABLE)
+--------------------------------------
+Best for: Production use, private deployment
+
+Steps:
+1. Go to: https://railway.app
+2. Sign up (free $5 credit)
+3. Click "New Project"
+4. Select "Deploy from GitHub"
+5. Connect repository
+6. Add environment variables
+7. Deploy!
+
+Cost: ~$5-10/month
+Features:
+✅ Private deployment
+✅ Custom domain
+✅ Better resources
+✅ Persistent storage
+
+OPTION 3: Heroku (RELIABLE)
+----------------------------
+Best for: Enterprise use
+
+Steps:
+1. Install Heroku CLI
+2. Create Procfile:
+   web: streamlit run streamlit_dashboard_enhanced.py --server.port=$PORT
+3. Create runtime.txt:
+   python-3.9.16
+4. Deploy:
+   heroku create your-app-name
+   git push heroku main
+
+Cost: ~$7-25/month
+
+OPTION 4: Your Own Server/VPS (BEST CONTROL)
+---------------------------------------------
+Best for: Maximum control, multiple cameras
+
+Providers:
+- DigitalOcean ($5-10/month)
+- AWS EC2
+- Google Cloud
+- Azure
+
+Steps:
+1. Rent VPS
+2. Install Python, dependencies
+3. Run: streamlit run streamlit_dashboard_enhanced.py --server.port 8501 --server.address 0.0.0.0
+4. Access: http://YOUR_SERVER_IP:8501
+
+OPTION 5: Docker + Cloud Run (SCALABLE)
+----------------------------------------
+Best for: Auto-scaling, enterprise
+
+1. Create Dockerfile
+2. Build image
+3. Deploy to Google Cloud Run or AWS ECS
+
+================================================================================
+                    QUICK CCTV INTEGRATION
+================================================================================
+
+Create: cctv_config.py
+----------------------
+
+```python
+# CCTV Configuration
+CAMERAS = {
+    'camera1': {
+        'name': 'Front Door',
+        'ip': '192.168.1.100',
+        'username': 'admin',
+        'password': 'password123',
+        'port': 554,
+        'channel': 1,
+        'rtsp_url': 'rtsp://admin:password123@192.168.1.100:554/stream1'
+    },
+    'camera2': {
+        'name': 'Parking Lot',
+        'ip': '192.168.1.101',
+        'username': 'admin',
+        'password': 'password456',
+        'port': 554,
+        'channel': 1,
+        'rtsp_url': 'rtsp://admin:password456@192.168.1.101:554/stream1'
+    }
+}
+```
+
+Modify Dashboard:
+-----------------
+
+```python
+import cctv_config
+
+# In sidebar
+camera_select = st.sidebar.selectbox(
+    "Select Camera",
+    options=list(cctv_config.CAMERAS.keys()),
+    format_func=lambda x: cctv_config.CAMERAS[x]['name']
+)
+
+# Get selected camera
+camera = cctv_config.CAMERAS[camera_select]
+rtsp_url = camera['rtsp_url']
+
+# Connect
+cap = cv2.VideoCapture(rtsp_url)
+cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+```
+
+================================================================================
+                    TROUBLESHOOTING CCTV
+================================================================================
+
+"Cannot connect to camera":
+----------------------------
+✅ Check IP address is correct
+✅ Check username/password
+✅ Check camera is on same network
+✅ Try different RTSP URL formats
+✅ Check firewall settings
+✅ Ping camera IP to verify connectivity
+
+"Connected but no frames":
+---------------------------
+✅ Check RTSP port (usually 554)
+✅ Try different stream (stream1, stream2)
+✅ Check camera supports RTSP
+✅ Reduce resolution in camera settings
+✅ Enable RTSP in camera web interface
+
+"Laggy video":
+--------------
+✅ Use cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+✅ Increase frame_skip
+✅ Use lower resolution stream
+✅ Check network bandwidth
+✅ Use wired connection instead of WiFi
+
+"Authentication failed":
+------------------------
+✅ Check username/password
+✅ URL encode special characters
+✅ Try without credentials first
+✅ Check camera user permissions
+
+================================================================================
+                    DEPLOYMENT CHECKLIST
+================================================================================
+
+Before Deploying:
+-----------------
+✅ Test locally with CCTV
+✅ Remove hardcoded passwords
+✅ Use environment variables
+✅ Test with requirements.txt
+✅ Add .gitignore for secrets
+✅ Create README.md
+✅ Test error handling
+
+Environment Variables:
+----------------------
+CAMERA_IP=192.168.1.100
+CAMERA_USERNAME=admin
+CAMERA_PASSWORD=password123
+CAMERA_PORT=554
+
+In code:
+```python
+import os
+camera_ip = os.getenv('CAMERA_IP')
+camera_user = os.getenv('CAMERA_USERNAME')
+camera_pass = os.getenv('CAMERA_PASSWORD')
+```
+
+.gitignore:
+-----------
+*.pyc
+__pycache__/
+.env
+cctv_config.py
+*.h5
+*.tflite
+yolov8n.pt
+
+================================================================================
+                    RECOMMENDED APPROACH
+================================================================================
+
+For Your Use Case:
+------------------
+
+1. DEVELOPMENT (Local):
+   - Use streamlit_dashboard_enhanced.py
+   - Connect to CCTV via RTSP
+   - Test all features
+
+2. DEPLOYMENT:
+   - Use Railway or DigitalOcean
+   - NOT Vercel (won't work)
+   - Set up environment variables
+   - Use Docker for consistency
+
+3. PRODUCTION:
+   - VPS with good CPU
+   - Multiple camera support
+   - Database for logging
+   - Alert notifications (email/SMS)
+
+================================================================================
+                    NEXT STEPS
+================================================================================
+
+1. Test CCTV connection locally
+2. Choose deployment platform (Railway recommended)
+3. Set up environment variables
+4. Deploy and test
+5. Configure alerts/notifications
+
+Need help with specific deployment? Let me know which platform you choose!
+
+================================================================================

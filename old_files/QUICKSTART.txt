@@ -1,0 +1,332 @@
+================================================================================
+                         QUICK START GUIDE
+================================================================================
+
+📁 FILES IN THIS FOLDER:
+------------------------
+✅ enhanced_detection.py       - Full-featured OpenCV version
+✅ streamlit_dashboard.py      - Web-based dashboard
+✅ combined_detection.py       - Original version
+✅ requirements.txt            - Dependencies
+✅ README.md                   - Full documentation
+✅ QUICKSTART.txt              - This file
+
+MODELS (must be present):
+✅ mobilenet_feature_extractor.tflite
+✅ violence_detection_lstm.tflite
+✅ gender_classification.tflite (optional)
+
+================================================================================
+                    INSTALLATION (ONE TIME)
+================================================================================
+
+Step 1: Install dependencies
+-----------------------------
+pip install -r requirements.txt
+
+This installs:
+- tensorflow (AI models)
+- opencv-python (video processing)
+- mediapipe (pose detection)
+- streamlit (web dashboard)
+- plotly (charts)
+- pandas (data)
+
+================================================================================
+                    OPTION 1: ENHANCED DETECTION
+================================================================================
+
+Run:
+----
+python enhanced_detection.py
+
+Features:
+---------
+✅ Continuous MediaPipe skeleton overlay
+✅ Weapon detection (knife, scissors, sharp objects)
+✅ Gender classification with face boxes
+✅ Real-time statistics
+✅ Session summary at end
+
+Controls:
+---------
+'q' or ESC - Quit and show statistics
+
+What You'll See:
+----------------
+- Green border = Normal activity
+- Red border = Violence detected
+- Skeleton overlay = Body pose (always visible)
+- Blue boxes = Male faces (M label)
+- Pink boxes = Female faces (F label)
+- Weapon alerts = Sharp objects detected
+- Top panel = Violence scores and reasons
+- Bottom panel = Gender counts and session stats
+
+At End:
+-------
+Session Statistics:
+- Duration
+- Total violence alerts
+- Total weapon detections
+- Male/Female detection counts
+- Gender ratio
+
+================================================================================
+                    OPTION 2: STREAMLIT DASHBOARD
+================================================================================
+
+Run:
+----
+streamlit run streamlit_dashboard.py
+
+Features:
+---------
+✅ Professional web interface
+✅ Live video feed with skeleton
+✅ Real-time statistics panel
+✅ Alert history (last 10)
+✅ Live violence score chart
+✅ Adjustable settings
+
+Access:
+-------
+Opens automatically in browser
+Usually: http://localhost:8501
+
+Controls:
+---------
+▶️ Start - Begin monitoring
+⏹️ Stop - Stop monitoring
+🔄 Reset Stats - Clear statistics
+
+Settings (Sidebar):
+-------------------
+- Violence Threshold (0.0-1.0)
+- Frame Skip (1-5)
+- Show Skeleton (checkbox)
+- Show Gender Detection (checkbox)
+
+What You'll See:
+----------------
+Left Panel:
+- Live video feed
+- Skeleton overlay
+- Face boxes with gender
+
+Right Panel:
+- Statistics (duration, alerts, gender)
+- Recent alerts with timestamps
+- Live chart of violence scores
+
+================================================================================
+                    COMPARISON
+================================================================================
+
+Enhanced Detection (OpenCV):
+----------------------------
+Pros:
+✅ Faster (20-25 FPS)
+✅ All features enabled
+✅ Session statistics at end
+✅ Weapon detection
+✅ Direct OpenCV window
+
+Best for:
+- Local monitoring
+- Maximum performance
+- Full feature set
+
+Streamlit Dashboard (Web):
+---------------------------
+Pros:
+✅ Professional UI
+✅ Web-based (remote access)
+✅ Live charts
+✅ Alert history
+✅ Adjustable settings
+
+Best for:
+- Remote monitoring
+- Professional presentation
+- Real-time analytics
+- Multiple viewers
+
+================================================================================
+                    WHAT'S FIXED
+================================================================================
+
+✅ MediaPipe now CONTINUOUS (skeleton always visible)
+✅ Weapon detection added (sharp objects)
+✅ Gender display FIXED (shows face boxes with M/F labels)
+✅ Session statistics shown at END
+✅ Streamlit dashboard created
+
+================================================================================
+                    TROUBLESHOOTING
+================================================================================
+
+Issue: "Could not open webcam"
+Fix: Try different camera index
+     cap = cv2.VideoCapture(1)  # Change 0 to 1, 2, etc.
+
+Issue: Gender not showing
+Fix: Check if gender_classification.tflite exists
+     If missing, gender detection will be skipped
+
+Issue: No skeleton visible
+Fix: pip install --upgrade mediapipe
+
+Issue: Streamlit not opening
+Fix: streamlit run streamlit_dashboard.py --server.port 8501
+
+Issue: Low FPS
+Fix: Increase FRAME_SKIP in code
+     Or use lower webcam resolution
+
+Issue: Too many false alarms
+Fix: Increase VIOLENCE_THRESHOLD from 0.7 to 0.8
+
+================================================================================
+                    TESTING
+================================================================================
+
+Normal Activity (should stay GREEN):
+------------------------------------
+- Standing still
+- Walking slowly
+- Waving hello
+- Talking
+
+Violence (should turn RED):
+----------------------------
+- Punching air rapidly
+- Kicking motions
+- Aggressive arm swings
+- Fighting stance
+- Raised fists
+
+Weapon Detection:
+-----------------
+- Hold scissors (should detect sharp object)
+- Hold knife (should detect sharp object)
+- Adds to violence score
+
+Gender Detection:
+-----------------
+- Face camera directly
+- Good lighting helps
+- Shows M or F label on face box
+- Counts displayed in real-time
+
+================================================================================
+                    PERFORMANCE
+================================================================================
+
+Enhanced Detection:
+-------------------
+FPS: 20-25
+CPU: Medium
+RAM: ~500 MB
+Features: All enabled
+
+Streamlit Dashboard:
+--------------------
+FPS: 15-20
+CPU: Medium-High
+RAM: ~700 MB
+Features: All enabled + web interface
+
+================================================================================
+                    RECOMMENDED WORKFLOW
+================================================================================
+
+1. Start with Enhanced Detection:
+   python enhanced_detection.py
+   
+2. Test all features:
+   - Check skeleton overlay
+   - Test violence detection
+   - Test gender detection
+   - Test weapon detection
+
+3. Try Streamlit Dashboard:
+   streamlit run streamlit_dashboard.py
+   
+4. Adjust settings in sidebar
+
+5. Monitor and collect statistics
+
+================================================================================
+                    KEYBOARD SHORTCUTS
+================================================================================
+
+Enhanced Detection:
+-------------------
+'q' - Quit and show statistics
+ESC - Quit and show statistics
+
+Streamlit Dashboard:
+--------------------
+(Use buttons in interface)
+▶️ Start
+⏹️ Stop
+🔄 Reset
+
+================================================================================
+                    EXAMPLE OUTPUT
+================================================================================
+
+Enhanced Detection End Screen:
+-------------------------------
+================================================================================
+SESSION STATISTICS
+================================================================================
+Duration: 120 seconds
+Total Violence Alerts: 5
+Total Weapon Detections: 2
+
+Gender Statistics:
+  Total Male detections: 145
+  Total Female detections: 78
+  Male ratio: 65.0%
+  Female ratio: 35.0%
+================================================================================
+✅ System stopped
+
+Streamlit Dashboard:
+--------------------
+Statistics Panel:
+  Session Duration: 120s
+  Violence Alerts: 5
+  Weapon Detections: 2
+  Male Detections: 145
+  Female Detections: 78
+
+Recent Alerts:
+  14:23:45 - Violence detected (0.82) - Raised arms, Extended arms
+  14:23:12 - Violence detected (0.76) - Fighting stance
+  14:22:58 - Violence detected (0.81) - Sharp object detected
+
+================================================================================
+                    READY TO START!
+================================================================================
+
+Choose your version:
+
+1. Full-featured OpenCV:
+   python enhanced_detection.py
+
+2. Professional web dashboard:
+   streamlit run streamlit_dashboard.py
+
+Both include:
+✅ Continuous MediaPipe skeleton
+✅ Weapon detection
+✅ Gender classification
+✅ Session statistics
+✅ Real-time alerts
+
+Enjoy! 🎉
+
+================================================================================
