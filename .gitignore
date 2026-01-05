@@ -39,13 +39,16 @@ cctv_config.py
 .DS_Store
 Thumbs.db
 
-# Models (too large for git)
+# Large training models only (keep inference models)
 *.h5
-*.tflite
-yolov8n.pt
 
 # Logs
 *.log
 
-# Streamlit
+# Streamlit secrets
 .streamlit/secrets.toml
+
+# Backup and old files
+backup/
+old_files/
+docs/
