@@ -1,7 +1,7 @@
 tensorflow==2.20.0
 tf-keras==2.20.0
 opencv-python-headless==4.10.0.84
-mediapipe==0.10.9
+mediapipe==0.10.30
 numpy==2.2.1
 streamlit==1.40.2
 plotly==5.24.1

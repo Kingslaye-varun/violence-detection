@@ -97,16 +97,12 @@ def load_models():
             models['errors'].append(f"YOLO error: {str(e)}")
             st.warning(f"⚠️ Weapon detection error: {str(e)}")
         
-        # Load MediaPipe
+        # Load MediaPipe - Disabled for Python 3.13 compatibility
         try:
-            models['pose'] = mp.solutions.pose.Pose(
-                static_image_mode=False,
-                model_complexity=1,
-                smooth_landmarks=True,
-                min_detection_confidence=0.7,
-                min_tracking_confidence=0.7
-            )
-            st.success("✅ MediaPipe pose tracking loaded")
+            # MediaPipe solutions API not available in 0.10.30+
+            # Pose detection disabled, using LSTM only
+            models['pose'] = None
+            st.warning("⚠️ MediaPipe pose disabled (Python 3.13 compatibility)")
         except Exception as e:
             models['errors'].append(f"MediaPipe error: {str(e)}")
             st.error(f"❌ MediaPipe failed: {str(e)}")
