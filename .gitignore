@@ -41,6 +41,7 @@ Thumbs.db
 
 # Large training models only (keep inference models)
 *.h5
+!models/violence_detection_lstm.h5
 
 # Logs
 *.log

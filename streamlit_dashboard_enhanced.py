@@ -63,9 +63,9 @@ def load_models():
             st.error(f"❌ CNN model failed: {str(e)}")
         
         try:
-            lstm_path = find_model('violence_detection_lstm.tflite')
-            models['lstm'] = tf.lite.Interpreter(model_path=lstm_path)
-            models['lstm'].allocate_tensors()
+            # Use H5 model with TensorFlow Keras (better compatibility than TFLite)
+            lstm_h5_path = find_model('violence_detection_lstm.h5')
+            models['lstm'] = tf.keras.models.load_model(lstm_h5_path)
             st.success("✅ Violence LSTM model loaded")
         except Exception as e:
             models['errors'].append(f"LSTM model error: {str(e)}")
@@ -686,12 +686,8 @@ def main():
                         # LSTM violence classification
                         if frame_count >= SEQ_LENGTH * frame_skip:
                             try:
-                                lstm_input = models['lstm'].get_input_details()
-                                lstm_output = models['lstm'].get_output_details()
-                                
-                                models['lstm'].set_tensor(lstm_input[0]['index'], sequence_buffer)
-                                models['lstm'].invoke()
-                                lstm_pred = models['lstm'].get_tensor(lstm_output[0]['index'])[0, 0]
+                                # Use Keras model inference (not TFLite)
+                                lstm_pred = models['lstm'].predict(sequence_buffer, verbose=0)[0, 0]
                                 
                                 # Combined score with weapon boost
                                 weapon_boost = 0.3 if weapon_count > 0 else 0.0
