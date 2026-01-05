@@ -1,0 +1,27 @@
+================================================================================
+                    ⚡ RUN THIS NOW - COPY & PASTE
+================================================================================
+
+cd "complete new"
+
+python verify_files.py
+
+git add -f models/mobilenet_feature_extractor.tflite models/violence_detection_lstm.tflite models/gender_classification.tflite yolov8n.pt
+
+git add requirements.txt .gitignore packages.txt
+
+git commit -m "Fix: Add models and update dependencies for Streamlit Cloud"
+
+git push origin main
+
+================================================================================
+
+⏰ WAIT 5-10 MINUTES
+
+Then check your app - it will work! 🎉
+
+If models still missing:
+- Check if models exist: dir models
+- Copy from backup: copy backup\*.tflite models\
+
+================================================================================

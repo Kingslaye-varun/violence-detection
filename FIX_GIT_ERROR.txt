@@ -1,0 +1,25 @@
+================================================================================
+                    🔧 FIX GIT ERROR - RUN THESE COMMANDS
+================================================================================
+
+Your local branch is behind the remote. Here's how to fix:
+
+OPTION 1: Pull and Merge (Recommended)
+---------------------------------------
+git pull origin main --no-rebase
+git push origin main
+
+OPTION 2: Force Push (If you don't care about remote changes)
+--------------------------------------------------------------
+git push origin main --force
+
+================================================================================
+
+⚠️ USE OPTION 1 (SAFER)
+
+Copy-paste these commands:
+--------------------------
+git pull origin main --no-rebase
+git push origin main
+
+================================================================================
