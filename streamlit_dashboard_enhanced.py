@@ -256,14 +256,26 @@ def main():
     with col1:
         camera_type = st.radio(
             "Select Camera Source",
-            ["Webcam", "IP Camera (RTSP)"],
+            ["Upload Video", "Demo Video", "IP Camera (RTSP)"],
             horizontal=True
         )
     
     with col2:
-        if camera_type == "Webcam":
-            st.info("💡 Using local webcam for monitoring")
-            camera_source = 0
+        if camera_type == "Upload Video":
+            st.info("💡 Upload a video file for analysis")
+            uploaded_file = st.file_uploader("Choose a video file", type=['mp4', 'avi', 'mov', 'mkv'])
+            if uploaded_file is not None:
+                # Save uploaded file temporarily
+                import tempfile
+                tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
+                tfile.write(uploaded_file.read())
+                camera_source = tfile.name
+            else:
+                camera_source = None
+        elif camera_type == "Demo Video":
+            st.info("💡 Using sample video for demonstration")
+            # Use a public sample video URL
+            camera_source = "https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"
         else:
             st.info("💡 Enter RTSP stream details below")
             
@@ -353,6 +365,12 @@ def main():
     
     # Main monitoring loop
     if st.session_state.running:
+        # Check if video source is available
+        if camera_type == "Upload Video" and camera_source is None:
+            st.warning("⚠️ Please upload a video file first")
+            st.session_state.running = False
+            return
+        
         try:
             cap = cv2.VideoCapture(camera_source)
             
@@ -541,7 +559,12 @@ def main():
             st.error(f"❌ System error: {str(e)}")
             st.session_state.running = False
     else:
-        video_placeholder.info("👆 Click 'Start Monitoring' to begin surveillance")
+        if camera_type == "Upload Video":
+            video_placeholder.info("👆 Upload a video file and click 'Start Monitoring'")
+        elif camera_type == "Demo Video":
+            video_placeholder.info("👆 Click 'Start Monitoring' to analyze demo video")
+        else:
+            video_placeholder.info("👆 Configure camera and click 'Start Monitoring'")
         status_placeholder.empty()
         metrics_placeholder.empty()
         alerts_placeholder.empty()
